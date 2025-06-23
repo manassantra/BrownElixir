@@ -1,0 +1,24 @@
+{
+  "name": "be-api-server",
+  "version": "1.0.0",
+  "description": "An eCommerce API Server for Hand-Made Wine & Custome Design Chocolate. This Project is for Personal Blog & Web Management Server. Please Don't copy and use this project for personal & business purposes. Copyrights & Reserved - 2025 - BrownElixir Inc.",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "manassantra.contact@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
