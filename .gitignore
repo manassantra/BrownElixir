@@ -32,6 +32,7 @@ jspm_packages/
 
 # Project Dependency directories
 be-api-server/node_modules/
+be-api-server/*.env
 
 
 # Snowpack dependency directory (https://snowpack.dev/)
