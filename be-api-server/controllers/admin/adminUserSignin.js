@@ -33,7 +33,7 @@ const adminUserSession = async (req, res) => {
     });
   }
 
-  const token = jwt.sign({ id: user.id }, process.env.JWT_USER_SECRET, { expiresIn: "2h" });
+  const token = jwt.sign({ id: user.id }, process.env.JWT_ADMIN_SECRET, { expiresIn: "2h" });
 
   return res.status(200).send({
     status: "Success",

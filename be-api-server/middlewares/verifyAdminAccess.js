@@ -12,7 +12,7 @@ const verifyAdminAccess = async (req, res, next) => {
   if (token) {
     const decoded = jwt.verify(token, secretKey); // verifies and decodes
     // console.log(decoded);
-    const user = await AdminUser.findOne({id: decoded._id}); // decode user from token
+    const user = await AdminUser.findOne({id: decoded.id}); // decode user from token
     if (user) {
       next();
     } else {
