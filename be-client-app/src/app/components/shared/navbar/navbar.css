@@ -1,0 +1,10 @@
+.navbar-brand {
+    margin: 5px 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 600;
+}
+
+.timer {
+  font-size: 1rem;
+  font-family: monospace;
+}

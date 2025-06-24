@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+
+.brandlogo {
+    height: auto;
+    width: 50px;
+    border: 1px solid;
+    border-radius: 50% 50%;
+    object-fit: contain;
+}
