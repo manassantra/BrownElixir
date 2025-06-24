@@ -10,6 +10,9 @@ require('dotenv').config({path: '.env'});
 const port = process.env.PORT;
 const host = process.env.HOST;
 
+// public static server
+server.use('/public', express.static('public'));
+
 // parse body json format & config cors-policy
 server.use(bodyParser.json());
 server.use(
