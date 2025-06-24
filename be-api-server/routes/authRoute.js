@@ -1,7 +1,7 @@
 const express = require("express"),
       authRoute = express(),
-      adminUserController = require("../../controllers/admin/adminUserRegistration"),
-      adminUserSignin = require("../../controllers/admin/adminUserSignin");
+      adminUserController = require("../controllers/admin/adminUserRegistration"),
+      adminUserSignin = require("../controllers/admin/adminUserSignin");
 
 // create new user
 authRoute.post("/register", adminUserController.adminUserRegistration);
