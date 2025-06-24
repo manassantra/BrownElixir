@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { adminUserSession } = require('./adminUserSignin'); // adjust path
+const { adminUserSession } = require('./adminUserSignin'); // Adjust path as needed
 
 jest.mock('../../models/adminUser', () => ({
   findOne: jest.fn()
@@ -22,7 +22,7 @@ describe('adminUserSession', () => {
     };
 
     res = {
-      status: jest.fn(() => res), // to allow chaining .send()
+      status: jest.fn(() => res),
       send: jest.fn()
     };
   });
@@ -49,7 +49,7 @@ describe('adminUserSession', () => {
     expect(res.status).toHaveBeenCalledWith(401);
     expect(res.send).toHaveBeenCalledWith({
       status: 'Warning',
-      message: 'Username/Password is wrong!'
+      message: 'User not found!'
     });
   });
 
@@ -67,7 +67,7 @@ describe('adminUserSession', () => {
     expect(res.status).toHaveBeenCalledWith(401);
     expect(res.send).toHaveBeenCalledWith({
       status: 'Warning',
-      message: 'Password is wrong!'
+      message: 'Password is incorrect!'
     });
   });
 
