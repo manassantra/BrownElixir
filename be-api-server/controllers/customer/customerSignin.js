@@ -1,8 +1,10 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const AdminUser = require('../../models/adminUser');
+const bcrypt = require('bcrypt'),
+    jwt = require('jsonwebtoken'),
+    Customer = require('../../models/customer');
 
-const adminUserSession = async (req, res) => {
+
+// create customer session
+const customerLoginSession = async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -14,8 +16,8 @@ const adminUserSession = async (req, res) => {
 
   const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(username);
   const user = isEmail
-    ? await AdminUser.findOne({ email: username })
-    : await AdminUser.findOne({ mob: username });
+    ? await Customer.findOne({ email: username })
+    : await Customer.findOne({ mob: username });
 
   if (!user) {
     return res.status(404).send({
@@ -33,15 +35,17 @@ const adminUserSession = async (req, res) => {
     });
   }
 
-  const token = jwt.sign({ id: user.id }, process.env.JWT_ADMIN_SECRET, { expiresIn: "2h" });
+  const token = jwt.sign({ id: user.id }, process.env.JWT_CUSTOMER_SECRET, { expiresIn: "2h" });
 
   return res.status(200).send({
     status: "Success",
-    user: user.fullName,
+    user: user.customerName,
     authToken: token,
     expiresIn: 2 * 60 * 60,
     _id: user.id
   });
 };
 
-module.exports = { adminUserSession };
+module.exports = { 
+    customerLoginSession 
+};
