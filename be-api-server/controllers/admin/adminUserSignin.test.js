@@ -46,7 +46,7 @@ describe('adminUserSession', () => {
     AdminUser.findOne.mockResolvedValue(null);
     await adminUserSession(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.status).toHaveBeenCalledWith(404);
     expect(res.send).toHaveBeenCalledWith({
       status: 'Warning',
       message: 'User not found!'
