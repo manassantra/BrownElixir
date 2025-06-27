@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Navbar } from '../shared/navbar/navbar';
-import { Sidenav } from '../shared/sidenav/sidenav';
+import { Footer } from '../shared/footer/footer';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Navbar, Sidenav],
+  imports: [Navbar, Footer],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })

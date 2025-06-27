@@ -11,9 +11,11 @@ import { Component, OnInit } from '@angular/core';
 
 export class Navbar implements OnInit {
   brandName?: string;
+  tagLine?: string;
   username?: string;
 
   ngOnInit(): void {
     this.brandName = "BrownElixir Inc.";
+    this.tagLine = "Indulge in the Sweetest Moments";
   }
 }

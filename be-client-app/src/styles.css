@@ -7,3 +7,8 @@
     border-radius: 50% 50%;
     object-fit: contain;
 }
+
+.dancing-font {
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+}
