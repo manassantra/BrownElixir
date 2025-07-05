@@ -1,0 +1,60 @@
+
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transform: translateZ(0);
+  display: flex;
+  height: 50px;
+  box-shadow: 0 -2px 5px -2px #333;
+  background-color: #fff;
+  border-radius: 5px 5px 0 0;
+}
+
+.mobile-bottom-nav__item {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mobile-bottom-nav__item--active {
+  color: #B5760C;
+}
+
+.mobile-bottom-nav__item-content {
+  display: flex;
+  flex-direction: column;
+  position: relative; /* Key for badge positioning */
+}
+
+a {
+  color: unset !important;
+}
+
+.not {
+  position: absolute;
+  top: 5px;
+  left: 48px;
+  height: 18px;
+  width: 18px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive tweak for very small screens */
+/* @media (max-width: 350px) {
+  .not {
+    top: -2px;
+    right: -5px;
+    height: 16px;
+    width: 16px;
+    font-size: 8px;
+  }
+} */

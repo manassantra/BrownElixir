@@ -3,15 +3,9 @@
     <div class="row">
       <div class="col-auto"><img class="brandlogo" src="./BrownElixir_logo.png" alt="logo"></div>
       <div class="col-auto brand-name">
-        <a class="navbar-brand" href="#">{{ brandName }}</a>
+        <a class="navbar-brand" routerLink="">{{ brandName }}</a>
         <div class="text-white">{{ tagLine }}</div>
       </div>
-    </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="d-flex ms-auto mb-2 mb-lg-0">
-      <div class="text-white" *ngIf="username">{{ username }}</div>
     </div>
   </div>
 </nav>
