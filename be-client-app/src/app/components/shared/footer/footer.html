@@ -1,25 +1,32 @@
 <nav class="mobile-bottom-nav">
-	<div class="mobile-bottom-nav__item mobile-bottom-nav__item--active">
-		<a class="mobile-bottom-nav__item-content nav-link" routerLink="" routerLinkActive="active">
-			<i class="bi bi-house-door"></i>
-		</a>		
-	</div>
-	<div class="mobile-bottom-nav__item">		
-		<a class="mobile-bottom-nav__item-content nav-link" routerLink="cart">
-			<i class="bi bi-cart"></i>
-			<span class="not ml-cart bg-warning border rounded-circle">3</span>
-		</a>
-	</div>
-	<div class="mobile-bottom-nav__item">
-		<a class="mobile-bottom-nav__item-content nav-link" routerLink="notification">
-			<i class="bi bi-bell"></i>
-			<span class="not ml-notification bg-warning border rounded-circle">1</span>
-		</a>		
-	</div>
-	
-	<div class="mobile-bottom-nav__item">
-		<a class="mobile-bottom-nav__item-content" routerLink="account">
-			<i class="bi bi-person-circle"></i>
-		</a>		
-	</div>
+  <div class="mobile-bottom-nav__item mobile-bottom-nav__item--active">
+    <a class="nav-link" routerLink="" routerLinkActive="active">
+      <i class="bi bi-house-door"></i>
+	  <span class="name">Home</span>
+    </a>
+  </div>
+
+  <div class="mobile-bottom-nav__item">
+    <a class="nav-link" routerLink="cart">
+      <i class="bi bi-cart"></i>
+      <span class="not mr-cart">3</span>
+	  <span class="name">Cart</span>
+    </a>
+  </div>
+
+  <div class="mobile-bottom-nav__item">
+	<a class="nav-link" routerLink="notification">
+	   <i class="bi bi-bell"></i>
+	   <span class="not mr-not">1</span>
+	   <span class="name">Notification</span>
+	</a>
+  </div>
+
+
+  <div class="mobile-bottom-nav__item">
+    <a class="nav-link" routerLink="account">
+      <i class="bi bi-person-circle"></i>
+	  <span class="name">Account</span>
+    </a>
+  </div>
 </nav>

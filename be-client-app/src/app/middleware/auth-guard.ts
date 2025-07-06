@@ -44,15 +44,19 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (user?.authToken && user?.expiresIn && !authService.isAuthTokenExpired(user.authToken)) {
     if (url.includes('login') || url.includes('signup')) {
       notyf.success('Already logged in');
-      router.navigate(['/']);
+      router.navigate(['']);
       return false;
     }
     return true;
   } else {
     if (!url.includes('login') && !url.includes('signup')) {
-      notyf.error('Please log in first');
-      router.navigate(['/login']);
-      return false;
+      if ((url.includes('') && url.includes('cart'))) {
+        return true;
+      } else {
+        notyf.error('Please log in first!');
+        router.navigate(['login']);
+        return false;
+      }
     }
     return true;
   }

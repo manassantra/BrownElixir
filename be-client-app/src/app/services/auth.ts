@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { map, ReplaySubject } from 'rxjs';
@@ -12,26 +12,29 @@ export class Auth {
   
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
-  apiurl = environment.base_api + '/customer/auth/';
+  apiurl = environment.BASE_API + '/customer/auth/';
   user: any;
   response: any;
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
   }
 
-  loginSession(model: any, reqBackUrl: any) {
-    return this.http.post(this.apiurl + 'signin' , model ).pipe(map((res)=>{
+  loginSession(model: any) {
+    const headers = new HttpHeaders({
+      'x-api-key': environment.API_KEY,
+      'x-api-secret': environment.API_SECRET,
+      'Content-Type': 'application/json'
+    });
+    return this.http.post(this.apiurl + 'signin' , model, { headers }).pipe(map((res)=>{
+      console.log(model);
       this.response = res;
-      this.setCurrentUser(this.response, reqBackUrl);
+      this.setCurrentUser(this.response);
     }));
   }
 
   // tslint:disable-next-line:typedef
-  setCurrentUser(user: User, url: any) {
-    this.user = localStorage.setItem('bongAuth', JSON.stringify(user));
+  setCurrentUser(user: User) {
+    this.user = localStorage.setItem('_cHoCoBiTeZ_SeSsiOn_token', JSON.stringify(user));
     this.currentUserSource.next(user);
-    setTimeout(()=>{
-      window.location.replace(url);
-    }, 2000)
   }
 
   isAuthTokenExpired(token:any): boolean {

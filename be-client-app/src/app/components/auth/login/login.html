@@ -1,1 +1,25 @@
-<p>login works!</p>
+<div class="container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginData()">
+        <div class="row d-flex justify-content-center mt-2">
+            <div class="col-md-6 mt-2">
+                <div class="form-group mb-3">
+                    <input type="text" class="form-control" formControlName="username" placeholder="Email / Mobile Number">
+                    <div *ngIf="isSubmitted && loginForm.controls['username'] && loginForm.controls['username'].errors">
+                        <small *ngIf="loginForm.controls['username'].errors?.['required']">Email / Mob is required.</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" formControlName="password" placeholder="Password">
+                    <div *ngIf="isSubmitted && loginForm.controls['password'] && loginForm.controls['password'].errors">
+                        <small *ngIf="loginForm.controls['password'].errors?.['required']">Password is required.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-end mt-4">
+            <div class="col-md-2">
+                <button class="btn btn-md btn-primary">Login</button>
+            </div>
+        </div>
+    </form>
+</div>

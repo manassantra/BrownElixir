@@ -23,6 +23,7 @@ const angularApp = new AngularNodeAppEngine();
  * });
  * ```
  */
+app.get('/')
 
 /**
  * Serve static files from /browser

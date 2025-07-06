@@ -13,6 +13,7 @@ export const routes: Routes = [
     { path: 'cart', component: Cart},
     { path: 'account', component: Account, canActivate: [authGuard]},
     { path: 'notification', component: Notification, canActivate: [authGuard]},
-    { path: 'login', component: Login, canDeactivate: [authGuard]},
-    { path: 'signup', component: Signup, canDeactivate: [authGuard]}
+    { path: 'login', component: Login},
+    { path: 'signup', component: Signup},
+    { path: '**', redirectTo: ''}
 ];
