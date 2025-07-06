@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
-import { Notyf } from 'notyf';
 import { map, ReplaySubject } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { User } from '../models/user';
@@ -9,14 +8,13 @@ import { User } from '../models/user';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthServices {
+export class Auth {
   
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
   apiurl = environment.base_api + '/customer/auth/';
   user: any;
   response: any;
-  notyf = new Notyf();
   constructor(private http: HttpClient) { 
   }
 

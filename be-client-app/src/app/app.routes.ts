@@ -5,12 +5,14 @@ import { Home } from './components/home/home';
 import { Cart } from './components/cart/cart';
 import { Account } from './components/account/account';
 import { Notification } from './components/notification/notification';
+import { authGuard } from './middleware/auth-guard';
+
 
 export const routes: Routes = [
     { path: '', component: Home},
     { path: 'cart', component: Cart},
-    { path: 'account', component: Account, canActivate: []},
-    { path: 'notification', component: Notification, canActivate: []},
-    { path: 'login', component: Login, canActivate: []},
-    { path: 'signup', component: Signup, canActivate: []}
+    { path: 'account', component: Account, canActivate: [authGuard]},
+    { path: 'notification', component: Notification, canActivate: [authGuard]},
+    { path: 'login', component: Login, canDeactivate: [authGuard]},
+    { path: 'signup', component: Signup, canDeactivate: [authGuard]}
 ];
