@@ -96,6 +96,8 @@
 /* Desktop view: floating sticky bar */
 @media (min-width: 720px) {
   .mobile-bottom-nav {
+    position: fixed;
+    z-index: 9999;
     width: auto;
     height: 3em; 
     left: 60%;               
