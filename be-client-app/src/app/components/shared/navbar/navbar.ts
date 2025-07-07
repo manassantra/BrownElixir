@@ -15,7 +15,7 @@ export class Navbar implements OnInit {
   username?: string;
 
   ngOnInit(): void {
-    this.brandName = "BrownElixir Inc.";
-    this.tagLine = "Indulge in the Sweetest Moments";
+    this.brandName = "ChocoBitez";
+    this.tagLine = "Love at first bite";
   }
 }

@@ -1,7 +1,7 @@
 const express = require('express'),
       baseApi = express(),
       productApi = require('./productApi'),
-      customerApi = require('./customerAuthApi'),
+      customerAuthApi = require('./customerAuthApi'),
       securityCheck = require('../middlewares/verifyApiSecret'),
       adminAuthApi = require('./adminAuthApi'),
       addressApi = require('./addressApi'),
@@ -11,8 +11,8 @@ const express = require('express'),
 
 baseApi.use("/admin", securityCheck.verifyApiSecret, adminAuthApi);
 baseApi.use("/product", securityCheck.verifyApiSecret, productApi);
-baseApi.use("/customer/v1", securityCheck.verifyApiSecret, customerApi);
-baseApi.use("/customer/v2", securityCheck.verifyApiSecret, customerProfileApi);
+baseApi.use("/customer/auth", securityCheck.verifyApiSecret, customerAuthApi);
+baseApi.use("/customer/v1", securityCheck.verifyApiSecret, customerProfileApi);
 baseApi.use("/address", securityCheck.verifyApiSecret, addressApi);
 baseApi.use("/order/v1", securityCheck.verifyApiSecret, orderApi);
 

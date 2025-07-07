@@ -1,1 +1,51 @@
-<p>login works!</p>
+<div class="container d-flex flex-column align-items-center justify-content-center min-vh-100 mt-4">
+  <!-- Logo -->
+  <img src="./BrownElixir_logo.png" alt="Chocco Bitez Logo" class="mb-4 rounded-circle border border-dark"
+    style="max-width: 120px;">
+
+  <!-- Card Wrapper -->
+  <div class="w-100" style="max-width: 400px;">
+    <div class="bg-light p-4 rounded shadow-sm">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginData()">
+        <!-- Email / Mobile -->
+        <input type="text" class="form-control mb-2" formControlName="username" placeholder="Enter Email / Mobile Number">
+        <div *ngIf="isSubmitted && loginForm.controls['username'] && loginForm.controls['username'].errors" class="mb-3">
+          <small *ngIf="loginForm.controls['username'].errors?.['required']">Email / Mob is required.</small>
+        </div>
+
+        <!-- Password -->
+        <input type="password" class="form-control mb-2" formControlName="password" placeholder="Enter Password">
+        <div *ngIf="isSubmitted && loginForm.controls['password'] && loginForm.controls['password'].errors" class="mb-3">
+          <small *ngIf="loginForm.controls['password'].errors?.['required']">Password is required.</small>
+        </div>
+
+        <!-- Forgot/Login with OTP -->
+        <div class="d-flex justify-content-between mb-3">
+          <a href="#" class="text-decoration-none small text-muted">Forgot password ?</a>
+          <a href="#" class="text-decoration-none small text-muted">Login with OTP</a>
+        </div>
+
+        <!-- Login Button -->
+        <div class="d-grid mb-3">
+          <button class="btn btn-warning fw-semibold text-dark">Login</button>
+        </div>
+      </form>
+      <!-- Or Divider -->
+      <div class="text-center mb-3">
+        <span class="text-muted">-------------- or --------------</span>
+      </div>
+
+      <!-- Create Account Note -->
+      <div class="text-center small text-muted mb-3">
+        If you don’t have an any account, <br>
+        please Create <span class="text-dark">New Account</span> first !
+      </div>
+
+      <!-- Create Account Button -->
+      <div class="d-grid">
+        <button class="btn btn-warning fw-semibold text-dark">Create Account</button>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br>

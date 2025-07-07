@@ -5,6 +5,9 @@
 /tmp
 /out-tsc
 /bazel-out
+# Ignore Angular environment files
+src/environments/environment*.ts
+
 
 # Node
 /node_modules
@@ -20,9 +23,11 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 .vscode
+.angular
 
 # Visual Studio Code
 .vscode/*
+.angular/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
