@@ -38,6 +38,7 @@ be-api-server/public/*.jpeg
 be-api-server/public/*.jpe
 be-api-server/public/*.png
 be-client-app/package-lock.json
+be-client-app/src/environments
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
