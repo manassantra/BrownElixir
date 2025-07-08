@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { DOCUMENT, Inject, Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { map, ReplaySubject } from 'rxjs';
 import { environment } from '../../environments/environment.development';
@@ -15,7 +15,7 @@ export class Auth {
   apiurl = environment.BASE_API + '/customer/auth/';
   user: any;
   response: any;
-  constructor(private http: HttpClient) {
+  constructor(@Inject(DOCUMENT) private document: Document, private http: HttpClient) {
   }
 
   loginSession(model: any) {
@@ -33,7 +33,10 @@ export class Auth {
 
   // tslint:disable-next-line:typedef
   setCurrentUser(user: User) {
+    const days = 7;
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
     this.user = localStorage.setItem('_cHoCoBiTeZ_SeSsiOn_token', JSON.stringify(user));
+    this.document.cookie = `_cHoCoBiTeZ_SeSsiOn_token=${this.response.authToken}; path=/; expires=${expires}; Secure; SameSite=Lax`;
     this.currentUserSource.next(user);
   }
 
@@ -47,8 +50,18 @@ export class Auth {
     return expirationTime < currentTime;
   }
 
+  getSessionToken() {
+    const match = this.document.cookie.match(('(^| )_cHoCoBiTeZ_SeSsiOn_token=([^;]+)'));
+    return match ? match[2] : null;
+  }
+
+  isSecuredLoggedIn(): boolean {
+    return (!this.isAuthTokenExpired(this.getSessionToken()) && !!this.getSessionToken());
+  }
+
   logoutSession() {
     localStorage.removeItem('_cHoCoBiTeZ_SeSsiOn_token');
+    this.document.cookie = `_cHoCoBiTeZ_SeSsiOn_token=; path=/; Secure; SameSite=Lax;`;
     this.currentUserSource.next(this.user);
     window.location.replace('');
   }

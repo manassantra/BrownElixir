@@ -36,7 +36,8 @@ export class Login {
           window.location.replace('');
         }, 2500);
       }, (err)=>{
-        this.notyf.error(err.error.message);
+        console.error(err);
+        // this.notyf.error(err.error.message);
       });
   }
 
