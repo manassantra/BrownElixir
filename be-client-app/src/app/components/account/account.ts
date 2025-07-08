@@ -7,18 +7,17 @@ import { Auth } from '../../services/auth';  // ✅ Assuming this is an injectab
   standalone: true,
   imports: [CommonModule],
   templateUrl: './account.html',
-  styleUrls: ['./account.css']  // ✅ Corrected to 'styleUrls'
+  styleUrls: ['./account.css']
 })
 export class Account {
 
-  userDetails: any;
+  userName: any;
   currentDateTime: Date = new Date();
 
-  constructor(private authServices: Auth) {  // ✅ Injected service
-    const userData = localStorage.getItem('_cHoCoBiTeZ_SeSsiOn_token');
+  constructor(private authServices: Auth) {
+    const userData = localStorage.getItem('_cHoCoBiTeZ_SeSsiOn_data');
     const user = userData ? JSON.parse(userData) : {};
-    this.userDetails = user;
-    
+    this.userName = user.user;
     setInterval(() => {
       this.currentDateTime = new Date();
     }, 1000);

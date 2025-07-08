@@ -13,7 +13,6 @@ export class Auth {
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
   apiurl = environment.BASE_API + '/customer/auth/';
-  user: any;
   response: any;
   constructor(@Inject(DOCUMENT) private document: Document, private http: HttpClient) {
   }
@@ -25,18 +24,17 @@ export class Auth {
       'Content-Type': 'application/json'
     });
     return this.http.post(this.apiurl + 'signin' , model, { headers }).pipe(map((res)=>{
-      console.log(model);
       this.response = res;
       this.setCurrentUser(this.response);
     }));
   }
 
-  // tslint:disable-next-line:typedef
   setCurrentUser(user: User) {
     const days = 7;
     const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    this.user = localStorage.setItem('_cHoCoBiTeZ_SeSsiOn_token', JSON.stringify(user));
     this.document.cookie = `_cHoCoBiTeZ_SeSsiOn_token=${this.response.authToken}; path=/; expires=${expires}; Secure; SameSite=Lax`;
+    delete user.authToken;
+    localStorage.setItem('_cHoCoBiTeZ_SeSsiOn_data', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
 
@@ -60,9 +58,9 @@ export class Auth {
   }
 
   logoutSession() {
-    localStorage.removeItem('_cHoCoBiTeZ_SeSsiOn_token');
+    localStorage.removeItem('_cHoCoBiTeZ_SeSsiOn_data');
     this.document.cookie = `_cHoCoBiTeZ_SeSsiOn_token=; path=/; Secure; SameSite=Lax;`;
-    this.currentUserSource.next(this.user);
+    this.currentUserSource.next({} as User);
     window.location.replace('');
   }
 }
