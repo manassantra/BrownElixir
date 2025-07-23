@@ -4,16 +4,19 @@ const Products = require('../../models/category');
 
 const createProductCategory = async (req, res) => {
   try {
-    const { name, description } = req.body;
+    const { categoryName, description } = req.body;
 
-    if (!name || !description) {
+    if (!categoryName || !description) {
       return res.status(400).json({ error: 'Name and description are required' });
     }
+
+    const imgUrlPath = `${req.protocol}://${req.get('host')}/public/${req.file.filename}`;
 
     const newCategory = new Products({
       id: crypto.randomBytes(16).toString('hex'),
       categoryName,
       description,
+      imgUrl: imgUrlPath,
       isApproved: true,
       createdDate: new Date(),
       createdBy: req.body.userId || 'system-admin',
@@ -54,16 +57,21 @@ const getProductCategoryById = async (req, res) => {
 const updateProductCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description } = req.body;
+    const { categoryName, description } = req.body;
 
-    if (!name || !description) {
+    if (!categoryName || !description) {
       return res.status(400).json({ error: 'Name and description are required' });
+    }
+
+    if (req.file) {
+      const imgUrlPath = `${req.protocol}://${req.get('host')}/public/${req.file.filename}`;
     }
 
     const updatedCategory = await Products.findOneAndUpdate(
       { id },
       { categoryName: categoryName },
       { description: description },
+      { imgUrl: imgUrlPath || req.body.imgUrl },
       { isApproved: true },
       { createdDate: new Date() },
       { createdBy: req.body.userId || 'system-admin' },

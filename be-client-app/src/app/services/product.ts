@@ -17,7 +17,7 @@ export class Product {
       'x-api-secret': environment.API_SECRET,
       'Content-Type': 'application/json'
     });
-   }
+  }
 
   getAllProducts(filters: any = {}): Observable<any> {
     let params = new HttpParams();
