@@ -32,13 +32,13 @@ jspm_packages/
 
 # Project Dependency directories
 be-api-server/node_modules/
-# be-api-server/*.env
+be-api-server/*.env
 be-api-server/package-lock.json
-# be-api-server/public/*.jpeg
-# be-api-server/public/*.jpg
-# be-api-server/public/*.png
+be-api-server/public/*.jpeg
+be-api-server/public/*.jpg
+be-api-server/public/*.png
 be-client-app/package-lock.json
-# be-client-app/src/environments/environment*.ts
+be-client-app/src/environments/environment*.ts
 
 
 # Snowpack dependency directory (https://snowpack.dev/)
