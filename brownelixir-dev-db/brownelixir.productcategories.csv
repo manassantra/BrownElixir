@@ -1,0 +1,2 @@
+_id,id,categoryName,description,imgUrl,isApproved,createdDate,createdBy,__v
+6880e75dea4f67fe01205818,59e40b5ab4a763b76976c57892b2d2a7,Test Cat,cat description .. lorem ipsum doren inmum.,http://localhost:3000/public/1753278301967-766196510.jpg,true,2025-07-23T13:45:01.974Z,system-admin,0

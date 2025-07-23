@@ -1,0 +1,2 @@
+_id,id,customerName,email,mob,gender,password,isPremium,isActive,__v
+685be67b67189370776e58b9,4cdd49e724ffd95a731d26c54bde70ab,Manas Santra,manassantra.contact@gmail.com,8436489050,male,$2b$10$FF5uEMrNobi/tmkvYR2nAOmQMj0imWaP.Iq3kfdWBXmWWU8uGk32a,false,true,0
