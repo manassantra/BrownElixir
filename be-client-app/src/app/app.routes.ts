@@ -13,7 +13,7 @@ import { Product } from './components/product/product';
 export const routes: Routes = [
     { path: '', component: Home},
     { path: 'cart', component: Cart},
-    { path: 'product-list', component: ProductList },
+    { path: 'product-list/:data', component: ProductList },
     { path: 'product/:id', component: Product },
     { path: 'account', component: Account, canActivate: [AuthGuard]},
     { path: 'notification', component: Notification, canActivate: [AuthGuard]},

@@ -10,40 +10,19 @@
         <img src="https://www.shutterstock.com/image-photo/red-wine-chocolate-truffles-on-600nw-2401987177.jpg" class="img-fluid rounded" alt="Banner">
     </div>
 
-    <div class="d-flex justify-content-start align-items-start mb-4" routerLink="product-list">
+    <div class="d-flex justify-content-start align-items-start mb-4" routerLink="product-list/All">
         <h6 class="mb-0">All Variants</h6>
         <a class="small all"><i class="bi bi-arrow-right-circle-fill text-dark"></i></a>
     </div>
 
     <div class="all-variants mb-3">
-        <div class="variant-item">
-            <img src="https://addictedtodates.com/wp-content/uploads/2019/01/vegan-milk-chocolate-recipe.jpg"
-                class="variant-img" alt="Choco">
-            <div class="variant-label">Choco</div>
-        </div>
-        <div class="variant-item">
-            <img src="https://www.cocoterra.com/wp-content/uploads/white-chocolate-with-milk-powder.jpg"
-                class="variant-img" alt="Milk">
-            <div class="variant-label">Milk</div>
-        </div>
-        <div class="variant-item">
-            <img src="https://i.ebayimg.com/images/g/DrQAAOSwsENlDd4e/s-l1200.jpg"
-                class="variant-img" alt="Mix">
-            <div class="variant-label">Mix</div>
-        </div>
-        <div class="variant-item">
-            <img src="https://images.squarespace-cdn.com/content/v1/5ac283f936099b5d4cebfb45/1522795332099-AK6MWNWZNEYXXLWX1QP6/CS_ChocolatesSlate_Banner.jpg"
-                class="variant-img" alt="Wine">
-            <div class="variant-label">Wine</div>
-        </div>
-        <div class="variant-item">
-            <img src="https://www.rosencakes.com/product_photo/00(2645.jpg"
-                class="variant-img" alt="Rose-N-Cakes">
-            <div class="variant-label">Rose N Cakes</div>
+        <div class="variant-item" *ngFor="let item of productCategories" (click)="goToThisVariant(item.categoryName)">
+            <img src={{item.imgUrl}} class="variant-img" alt={{item.categoryName}}>
+            <div class="variant-label">{{item.categoryName}}</div>
         </div>
     </div>
 
-    <div class="d-flex justify-content-start align-items-start mb-4" routerLink="product-list">
+    <div class="d-flex justify-content-start align-items-start mb-4" routerLink="product-list/All">
         <h6 class="mb-0">All Products</h6>
         <a class="small all"><i class="bi bi-arrow-right-circle-fill text-dark"></i></a>
     </div>

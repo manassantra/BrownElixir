@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Product } from '../../services/product';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -26,9 +26,14 @@ export class ProductList implements OnInit {
   search = '';
   sortOrder = 'asc';
 
-  constructor(private productService: Product) { }
+  constructor(private productService: Product, private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
+    this.flavor = this.route.snapshot.paramMap.get('data')!;
+    if (this.flavor === 'All') {
+      this.flavor = "";
+    }
     this.loadProducts();
   }
 
@@ -72,18 +77,14 @@ export class ProductList implements OnInit {
     this.page = 1;
     this.products = [];
     this.loadProducts();
-    console.log('Filters applied:', {
-      category: this.category,
-      brand: this.brand,
-      flavor: this.flavor,
-      inStock: this.inStock,
-      search: this.search,
-      sortOrder: this.sortOrder
-    });
   }
 
   selectFlavor(value: string) {
     this.flavor = value;
     this.applyFilters();
+    this.router.navigate(
+      ['/product-list', this.flavor?this.flavor : this.flavor? '': 'All'], // new route param
+      { relativeTo: this.route } // optional; can remove if absolute path
+    );
   }
 }
