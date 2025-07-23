@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { DOCUMENT, Inject, Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { map, ReplaySubject } from 'rxjs';
 import { environment } from '../../environments/environment.development';
@@ -13,9 +13,8 @@ export class Auth {
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
   apiurl = environment.BASE_API + '/customer/auth/';
-  user: any;
   response: any;
-  constructor(private http: HttpClient) {
+  constructor(@Inject(DOCUMENT) private document: Document, private http: HttpClient) {
   }
 
   loginSession(model: any) {
@@ -25,15 +24,17 @@ export class Auth {
       'Content-Type': 'application/json'
     });
     return this.http.post(this.apiurl + 'signin' , model, { headers }).pipe(map((res)=>{
-      console.log(model);
       this.response = res;
       this.setCurrentUser(this.response);
     }));
   }
 
-  // tslint:disable-next-line:typedef
   setCurrentUser(user: User) {
-    this.user = localStorage.setItem('_cHoCoBiTeZ_SeSsiOn_token', JSON.stringify(user));
+    const days = 7;
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    this.document.cookie = `_cHoCoBiTeZ_SeSsiOn_token=${this.response.authToken}; path=/; expires=${expires}; Secure; SameSite=Lax`;
+    delete user.authToken;
+    localStorage.setItem('_cHoCoBiTeZ_SeSsiOn_data', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
 
@@ -47,9 +48,19 @@ export class Auth {
     return expirationTime < currentTime;
   }
 
+  getSessionToken() {
+    const match = this.document.cookie.match(('(^| )_cHoCoBiTeZ_SeSsiOn_token=([^;]+)'));
+    return match ? match[2] : null;
+  }
+
+  isSecuredLoggedIn(): boolean {
+    return (!this.isAuthTokenExpired(this.getSessionToken()) && !!this.getSessionToken());
+  }
+
   logoutSession() {
-    localStorage.removeItem('_cHoCoBiTeZ_SeSsiOn_token');
-    this.currentUserSource.next(this.user);
+    localStorage.removeItem('_cHoCoBiTeZ_SeSsiOn_data');
+    this.document.cookie = `_cHoCoBiTeZ_SeSsiOn_token=; path=/; Secure; SameSite=Lax;`;
+    this.currentUserSource.next({} as User);
     window.location.replace('');
   }
 }

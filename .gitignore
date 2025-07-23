@@ -5,6 +5,7 @@
 # Logs
 logs
 *.log
+*.env
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -35,7 +36,7 @@ be-api-server/node_modules/
 be-api-server/*.env
 be-api-server/package-lock.json
 be-api-server/public/*.jpeg
-be-api-server/public/*.jpe
+be-api-server/public/*.jpg
 be-api-server/public/*.png
 be-client-app/package-lock.json
 be-client-app/src/environments/environment*.ts
@@ -49,7 +50,7 @@ web_modules/
 
 # Optional npm cache directory
 .npm
-
+.env
 # Optional eslint cache
 .eslintcache
 

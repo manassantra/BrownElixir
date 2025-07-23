@@ -1,67 +1,60 @@
-.variant-img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 1px solid #ddd;
+input.form-control::placeholder {
+  color: #aaa;
+  font-size: 14px;
 }
 
 .product-card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 10px;
-    text-align: center;
-    background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.product-img {
-    width: 100%;
-    border-radius: 10px;
-    object-fit: cover;
+.product-card img {
+  height: 150px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
 }
 
-.search-bar {
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    width: 100%;
+.product-name {
+  font-size: 14px;
+  font-weight: 600;
 }
 
-.variant-label {
-    font-size: 12px;
-    margin-top: 5px;
+.price {
+  font-size: 13px;
+  margin-bottom: 4px;
 }
 
-.all-variants {
-    overflow-x: auto;
-    white-space: nowrap;
+.quantity {
+  font-size: 12px;
 }
 
-.all-variants .variant-item {
-    display: inline-block;
-    margin-right: 15px;
-    text-align: center;
+.icon-box {
+  position: relative;
+  font-size: 20px;
+  cursor: pointer;
 }
 
-.product-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 5px;
+.icon-box .small-icon {
+  position: absolute;
+  bottom: -6px;
+  right: -8px;
+  font-size: 10px;
+}
+.product-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.product-actions i {
-    cursor: pointer;
+.product-card:hover img {
+  transform: scale(1.05);
+  transition: transform 0.5s ease;
+}
+.product-card:hover .product-name {
+  color: #ffa600;
 }
 
-.all {
-    text-decoration: none !important;
-    cursor: pointer;
-    margin: 0 0 0 0.4em;
-}
 
 @media (max-width: 576px) {
-    .product-card {
-        margin-bottom: 10px;
-    }
+  .product-card img {
+    height: 120px;
+  }
 }
