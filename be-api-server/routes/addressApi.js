@@ -10,7 +10,7 @@ addressApi.post("/create", accessCheck.verifyCustomerAccess, addressController.c
 addressApi.get("/list/:id", accessCheck.verifyCustomerAccess, addressController.getCustomerAddresses);
 
 // get addressDetails by id
-addressApi.get("/:id", accessCheck.verifyCustomerAccess, addressController.getAddressById);
+addressApi.get("/detail/:id", accessCheck.verifyCustomerAccess, addressController.getAddressById);
 
 // update address details
 addressApi.put("/update/:id", accessCheck.verifyCustomerAccess, addressController.updateAddress);
