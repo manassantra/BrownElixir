@@ -1,8 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Product } from '../../services/product';
+import { ProductService } from '../../services/product';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CartService } from '../../services/cart-service';
 
 @Component({
   selector: 'app-product-list',
@@ -26,8 +27,8 @@ export class ProductList implements OnInit {
   search = '';
   sortOrder = 'asc';
 
-  constructor(private productService: Product, private route: ActivatedRoute,
-    private router: Router) { }
+  constructor(private productService: ProductService, private route: ActivatedRoute,
+    private router: Router, private cartService: CartService) { }
 
   ngOnInit() {
     this.flavor = this.route.snapshot.paramMap.get('data')!;
@@ -60,6 +61,10 @@ export class ProductList implements OnInit {
       console.error('Error:', error);
       this.loading = false;
     });
+  }
+
+  addToCart(product: any) {
+    this.cartService.addToCart(product);
   }
 
   @HostListener('window:scroll', [])

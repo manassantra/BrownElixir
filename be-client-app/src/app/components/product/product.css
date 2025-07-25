@@ -1,0 +1,9 @@
+.text-justify {
+  text-align: justify;
+}
+
+.product-image {
+  width: 140px;
+  height: 180px;
+  object-fit: cover;
+}

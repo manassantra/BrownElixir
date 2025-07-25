@@ -1,1 +1,72 @@
-<p>product works!</p>
+<div class="container my-2" style="max-width: 450px;">
+  <!-- Header -->
+  <div class="d-flex justify-content-between border-bottom pb-2 mb-3">
+    <span class="me-2" style="cursor: pointer;" (click)="goBack()">&#8592;</span>
+    <h6 class="mb-0 fw-semibold mx-auto">Product Details</h6>
+  </div>
+
+  <!-- Product Name & Price -->
+  <div class="d-flex justify-content-between align-items-start mb-3">
+    <h6 class="fw-bold mb-0">{{ product?.productName }}</h6>
+    <div class="text-end">
+      <span class="fw-semibold">Price : </span>
+      <span class="text-success fw-bold">{{ product?.unitPrice | currency:'INR':'symbol':'1.2-2' }}</span>
+    </div>
+  </div>
+
+  <!-- Product Image + Info -->
+  <div class="d-flex justify-content-between gap-2 mb-3">
+    <div class="col-md-6 col-auto">
+      <img class="product-image rounded border" src={{product?.imgUrl}} alt={{product?.productName}} />
+    </div>
+    <div class="col-md-6 col-auto">
+      <div class="flex-grow-1 small">
+        <div class="mb-1 fw-semibold">
+          Ratings :
+          <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+          <span class="badge bg-success ms-2">4.3</span>
+        </div>
+        <div class="mb-1"><strong>CODE :</strong> {{ product?.productCode }}</div>
+        <div class="mb-1"><strong>Flavor :</strong> {{ product?.flavor }}</div>
+        <div class="mb-1"><strong>Weight :</strong> {{ product?.unitWeight }} gm</div>
+        <div class="mb-1"><strong>In Stock :</strong> {{ product?.stock }}</div>
+
+        <div class="d-flex align-items-center mt-2" *ngIf="product?.inStock">
+          <strong class="me-2">Select Qty :</strong>
+          <select class="form-select form-select-sm w-auto" [(ngModel)]="selectedQty" (ngModelChange)="selectQty()" [disabled]="!product.inStock">
+            <option *ngFor="let qty of quantityOptions" [value]="qty">{{ qty }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Cart Button -->
+  <div class="d-grid mb-4">
+    <button class="btn fw-semibold" [ngClass]="{'btn-warning': product?.inStock, 'btn-secondary': !product?.inStock}"
+      [disabled]=!product?.inStock (click)="addToCart(product)" routerLinkActive="router-link-active" >{{ product?.inStock ? 'Add Cart' : 'Out of Stock' }}</button>
+  </div>
+
+  <!-- Description -->
+  <div class="mb-3">
+    <p class="fw-semibold mb-1">Description :</p>
+    <p class="text-justify small mb-0">
+      {{ product?.description }}
+    </p>
+  </div>
+
+  <!-- Ingredients -->
+  <div class="mb-4">
+    <p class="fw-semibold mb-1">Ingredients :</p>
+    <p class="small mb-0">
+      {{product?.ingredients}}
+    </p>
+  </div>
+
+  <!-- Reviews Link -->
+  <div class="text-center">
+    <a href="#" disabled class="text-primary fw-semibold small text-decoration-none">See Product Reviews &nbsp;&#8594;</a>
+  </div>
+  <br>
+  <br>
+</div>

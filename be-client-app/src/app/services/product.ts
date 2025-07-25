@@ -6,12 +6,12 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class Product {
+export class ProductService {
 
   apiurl = environment.BASE_API + '/product/';
   headers: any;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.headers = new HttpHeaders({
       'x-api-key': environment.API_KEY,
       'x-api-secret': environment.API_SECRET,
@@ -29,5 +29,9 @@ export class Product {
     }
 
     return this.http.get(this.apiurl + 'list', { headers: this.headers, params });
+  }
+
+  getProductDetails(id: any): Observable<any> {
+    return this.http.get(this.apiurl + id, { headers: this.headers});
   }
 }
