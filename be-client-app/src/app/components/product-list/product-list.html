@@ -1,9 +1,9 @@
-<div class="container py-3">
+<div class="container py-3" style="max-width: 720px;">
 
     <!-- 🔍 Search Box -->
-    <div class="d-flex justify-content-center col-xs-10 col-md-6 col-lg-6 mb-3">
+    <div class="d-flex justify-content-center mb-3">
         <input type="text" [(ngModel)]="search" (input)="applyFilters()"
-            class="form-control w-100 w-md-50 border border-dark rounded-pill px-3" placeholder="Search Product / Id / Flavor / Season">
+            class="form-control w-md-50 border border-dark rounded-pill px-3" placeholder="Search Product Name / Product Id / Flavor">
     </div>
 
     <!-- 🔗 Filter & Sort Controls -->
@@ -34,61 +34,42 @@
             </ul>
         </div>
 
-
-        <!-- <select class="form-select form-select-sm w-auto" [(ngModel)]="flavor" (ngModelChange)="applyFilters()">
-            <option value="" disabled>-Sort by Flavor-</option>
-            <option value="Dark">Dark Chocolate</option>
-            <option value="Mix">Mix</option>
-            <option value="Milk">Milk</option>
-            <option value="Wine">Wine</option>
-        </select> -->
-
-        <!-- <select class="form-select form-select-sm w-auto" [(ngModel)]="category" (change)="applyFilters()">
-      <option selected value="">-Season-</option>
-      <option value="Valentines Day">Valentine's Day</option>
-      <option value="Birthday Gift">Birthday Gift</option>
-      <option value="Anniversary Gift">Anniversary Gift</option>
-      <option value="Date Surprise">Date Surprise</option>
-    </select> -->
-
         <select class="form-select form-select-sm w-auto" [(ngModel)]="sortOrder" (change)="applyFilters()">
-            <span><i class="bi bi-tags"></i></span>
             <option value="asc">Low to High</option>
             <option value="desc">High to Low</option>
         </select>
-
-        <!-- <select class="form-select form-select-sm w-auto">
-      <option selected disabled>-Ratings-</option>
-      <option>Top Rated</option>
-      <option>Most Reviewed</option>
-    </select> -->
 
     </div>
 
     <!-- 🛒 Product Grid -->
     <div class="row g-3">
-        <div class="col-6 col-md-4 col-lg-3" *ngFor="let product of products">
-            <div class="card h-100 product-card text-center" [routerLink]="['/product', product.id]">
+        <div class="col-6 col-md-4 col-lg-3" *ngFor="let product of products" [ngClass]="{ 'opacity-50 disabled': !product?.inStock }">
+            <div class="card h-100 product-card text-center">
 
-                <img [src]="product.imgUrl" alt="Product" class="card-img-top">
+                <img [src]="product.imgUrl" alt="Product" class="card-img-top"  [routerLink]="['/product', product?.id]">
 
                 <div class="card-body p-2">
-                    <h6 class="product-name mb-1 text-truncate">{{ product.productName }}</h6>
+                    <h6 class="product-name mb-1 text-truncate" [routerLink]="['/product', product?.id]">{{ product?.productName }}</h6>
 
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="price mb-1 fw-bold">Rs. {{ product.unitPrice | number:'1.2-2' }}</p>
+                    <div class="d-flex justify-content-between align-items-center" [routerLink]="['/product', product?.id]">
+                        <p class="price mb-1 fw-bold">Rs. {{ product?.unitPrice | number:'1.2-2' }}</p>
                         <p class="quantity text-muted small mb-1">★ 4.2</p>
                     </div>
 
-                    <div class="d-flex justify-content-around">
-                        <div class="icon-box">
+                    <div class="d-flex justify-content-around" *ngIf="product?.inStock">
+                        <button class="btn btn-sm btn-outline-warning">
                             <i class="bi bi-heart"></i>
-                        </div>
+                        </button>
 
-                        <div class="icon-box">
+                        <button class="btn btn-sm btn-outline-dark" (click)="addToCart(product)">
                             <i class="bi bi-cart"></i>
                             <i class="bi bi-plus small-icon"></i>
-                        </div>
+                        </button>
+                    </div>
+                    <div class="d-flex justify-content-center" *ngIf="!product?.inStock">
+                        <button class="btn btn-sm btn-outline-dark" [ngClass]="{'disabled': !product?.inStock}">
+                            Out of Stock
+                        </button>
                     </div>
                 </div>
 
