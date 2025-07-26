@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve": "node dist/be-client-app/server/server.mjs"
+    "serve": "node /opt/render/project/src/be-client-app/dist/be-client-app/server/server.mjs"
   },
   "private": true,
   "dependencies": {
