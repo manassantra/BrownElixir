@@ -9,6 +9,11 @@ require('dotenv').config({path: '.env'});
 // PORT & HOST config
 const port = process.env.PORT;
 const host = process.env.HOST;
+const origin = process.env.ORIGIN;
+const methods = process.env.METHODS
+                .replace(/[\[\]']+/g, '')
+                .split(',')
+                .map(method => method.trim());
 
 // public static server
 server.use('/public', express.static('public'));
@@ -18,12 +23,20 @@ server.use(bodyParser.json());
 server.use(
     bodyParser.urlencoded({
     extended: false,
-  }));
-const corsList = { 
-  origin: process.env.ORIGIN
+}));
+const corsOptions = {
+  origin: origin,
+  credentials: true,
+  methods: methods,
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'x-api-secret',
+    'x-api-key'
+  ]
 };
-server.use(cors(corsList));
 
+server.use(cors(corsOptions));
 
 // DataBase Config
 mongoose
@@ -38,10 +51,17 @@ mongoose
 });
 
 // API config
+server.use("test", (req, res)=>{
+  try {
+    res.send.json({code: 200, message: "Server is up & running..."});
+  } catch(err) {
+    res.send.json({code: err.statusCode, message: err.message, error: err.error});
+  }
+});
 server.use("/api", baseApi);
 
 // create server
 server.listen(port, ()=>{
-    console.log("Server listening on port : " + port);
-    console.log("Webserver Url : " + host+':'+port);
+    console.log("Server listening...");
+    console.log("Web-API-server Url : " + host+':'+port);
 })

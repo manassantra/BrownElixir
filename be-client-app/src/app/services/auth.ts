@@ -9,7 +9,7 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class Auth {
-  
+
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
   apiurl = environment.BASE_API + '/customer/auth/';
@@ -32,7 +32,7 @@ export class Auth {
   setCurrentUser(user: User) {
     const days = 7;
     const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    this.document.cookie = `_cHoCoBiTeZ_SeSsiOn_token=${this.response.authToken}; path=/; expires=${expires}; Secure; SameSite=Lax`;
+    this.document.cookie = `_cHoCoBiTeZ_SeSsiOn_token=${this.response.authToken}; path=/; expires=${expires}; Secure; SameSite=None`;
     delete user.authToken;
     localStorage.setItem('_cHoCoBiTeZ_SeSsiOn_data', JSON.stringify(user));
     this.currentUserSource.next(user);
@@ -59,7 +59,7 @@ export class Auth {
 
   logoutSession() {
     localStorage.removeItem('_cHoCoBiTeZ_SeSsiOn_data');
-    this.document.cookie = `_cHoCoBiTeZ_SeSsiOn_token=; path=/; Secure; SameSite=Lax;`;
+    this.document.cookie = `_cHoCoBiTeZ_SeSsiOn_token=;`;
     this.currentUserSource.next({} as User);
     window.location.replace('');
   }
