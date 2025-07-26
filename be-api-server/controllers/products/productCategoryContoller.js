@@ -10,7 +10,7 @@ const createProductCategory = async (req, res) => {
       return res.status(400).json({ error: 'Name and description are required' });
     }
 
-    const imgUrlPath = `${req.protocol}://${req.get('host')}/public/${req.file.filename}`;
+    const imgUrlPath = `${process.env.HOST}/public/${req.file.filename}`;
 
     const newCategory = new Products({
       id: crypto.randomBytes(16).toString('hex'),
@@ -64,7 +64,7 @@ const updateProductCategory = async (req, res) => {
     }
 
     if (req.file) {
-      const imgUrlPath = `${req.protocol}://${req.get('host')}/public/${req.file.filename}`;
+      var imgUrlPath = `${process.env.HOST}/public/${req.file.filename}`;
     }
 
     const updatedCategory = await Products.findOneAndUpdate(
@@ -104,7 +104,7 @@ const deleteProductCategory = async (req, res) => {
 }
 
 module.exports = {
-  createProductCategory,
+    createProductCategory,
     getProductCategories,
     getProductCategoryById,
     updateProductCategory,

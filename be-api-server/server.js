@@ -40,11 +40,7 @@ server.use(cors(corsOptions));
 
 // DataBase Config
 mongoose
-  .connect(process.env.DB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    ssl: true
-  })
+  .connect(process.env.DB_URL)
   .then((x) => {
     console.log(
       `Connected to : MongoDB-${x.connections[0].name}`
@@ -55,11 +51,11 @@ mongoose
 });
 
 // API config
-server.use("test", (req, res)=>{
+server.use("/test", (req, res)=>{
   try {
-    res.send.json({code: 200, message: "Server is up & running..."});
+    res.send({code: 200, message: "Server is up & running..."});
   } catch(err) {
-    res.send.json({code: err.statusCode, message: err.message, error: err.error});
+    res.send({code: err.statusCode, message: err.message, error: err.error});
   }
 });
 server.use("/api", baseApi);

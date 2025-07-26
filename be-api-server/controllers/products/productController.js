@@ -28,7 +28,7 @@ const createProduct = async (req, res) => {
     minQty, maxQty, inStock, stock, userId
   } = req.body;
 
-  const imgUrlPath = `${req.protocol}://${req.get('host')}/public/${req.file.filename}`;
+  const imgUrlPath = `${process.env.HOST}/public/${req.file.filename}`;
 
   try {
     const newProduct = new Products({
@@ -117,7 +117,7 @@ const updateProduct = async (req, res) => {
     };
 
     if (req.file) {
-      updateData.imgUrl = `${req.protocol}://${req.get('host')}/public/${req.file.filename}`;
+      updateData.imgUrl = `${process.env.HOST}/public/${req.file.filename}`;
     }
 
     const updatedProduct = await Products.findOneAndUpdate({ id }, updateData, {
