@@ -40,7 +40,11 @@ server.use(cors(corsOptions));
 
 // DataBase Config
 mongoose
-  .connect(process.env.DB_URL)
+  .connect(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    ssl: true
+  })
   .then((x) => {
     console.log(
       `Connected to : MongoDB-${x.connections[0].name}`
