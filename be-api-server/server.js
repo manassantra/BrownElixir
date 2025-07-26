@@ -51,6 +51,13 @@ mongoose
 });
 
 // API config
+server.use("test", (req, res)=>{
+  try {
+    res.send.json({code: 200, message: "Server is up & running..."});
+  } catch(err) {
+    res.send.json({code: err.statusCode, message: err.message, error: err.error});
+  }
+});
 server.use("/api", baseApi);
 
 // create server
