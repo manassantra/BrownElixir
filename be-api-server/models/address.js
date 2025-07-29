@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 
 const AddressSchema = new mongoose.Schema({
-  id: { type: String, unique: true},
+  id: { type: String},
   customerId: { type: String, required: true },
-  houseInfo: String,
-  flatInfo: String,
+  houseInfo: {type: String},
+  flatInfo: {type: String},
   addressLine1: { type: String, required: true },
-  addressLine1: { type: String },
+  addressLine2: { type: String },
   cityOrTown: { type: String, required: true },
   state: { type: String, required: true},
   country: { type: String, required: true},
   pincode: { type: String, required: true},
-  addresstype: { type: String, enum:[ 'home', 'work', 'others'], default: 'home'},
+  isDefault: {type: Boolean}
 });
 
 module.exports = mongoose.model('Addresses', AddressSchema);

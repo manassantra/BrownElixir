@@ -8,16 +8,18 @@ import { Notification } from './components/notification/notification';
 import { AuthGuard } from './middleware/auth-guard';
 import { ProductList } from './components/product-list/product-list';
 import { Product } from './components/product/product';
+import { Address } from './components/address/address';
 
 
 export const routes: Routes = [
     { path: '', component: Home},
-    { path: 'cart', component: Cart},
+    { path: 'cart', component: Cart, canActivate: [AuthGuard]},
     { path: 'product-list/:data', component: ProductList },
     { path: 'product/:id', component: Product },
     { path: 'account', component: Account, canActivate: [AuthGuard]},
     { path: 'notification', component: Notification, canActivate: [AuthGuard]},
-    { path: 'login', component: Login},
+    { path: 'address-list', component: Address, canActivate: [AuthGuard]},
+    { path: 'login', component: Login, canActivate: [AuthGuard]},
     { path: 'signup', component: Signup},
     { path: '**', redirectTo: ''}
 ];

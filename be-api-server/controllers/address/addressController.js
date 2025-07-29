@@ -4,9 +4,10 @@ const crypto = require('crypto');
 // Create new address
 const createAddress = async(req, res) => {
   try {
+    let isDefault = false;
     const {
-      customerId, houseInfo, flatInfo, addressLine1,
-      cityOrTown, state, country, pincode, addresstype
+      customerId, houseInfo, flatInfo, addressLine1, addressLine2,
+      cityOrTown, state, country, pincode
     } = req.body;
 
     if (!customerId || !addressLine1 || !cityOrTown || !state || !country || !pincode) {
@@ -16,17 +17,23 @@ const createAddress = async(req, res) => {
       });
     }
 
+    const findDefaultAddress = await isDefaultAddressExist(customerId);
+    if (!findDefaultAddress) {
+      isDefault = true;
+    }
+
     const newAddress = new Address({
       id: crypto.randomBytes(16).toString("hex"),
       customerId,
       houseInfo,
       flatInfo,
       addressLine1,
+      addressLine1,
       cityOrTown,
       state,
       country,
       pincode,
-      addresstype
+      isDefault
     });
 
     await newAddress.save();
@@ -145,6 +152,17 @@ const deleteAddress = async(req, res) => {
     });
   }
 };
+
+async function isDefaultAddressExist(customerId) {
+  const defaultAddress = await Address.findOne({
+    customerId: customerId,
+    isDefault: true
+  });
+  if (defaultAddress) {
+    return true;
+  }
+  return false;
+}
 
 module.exports = {
   createAddress,

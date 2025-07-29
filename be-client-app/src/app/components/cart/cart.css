@@ -1,4 +1,12 @@
 img {
-  filter: drop-shadow(0 0 8px rgba(0,0,0,0.1));
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.1));
   max-width: 100%;
+}
+
+.address {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: small;
+  height: 3em !important;
+  margin-left: 20px !important;
 }

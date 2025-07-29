@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Auth } from '../../services/auth';  // ✅ Assuming this is an injectable service
+import { Auth } from '../../services/auth';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './account.html',
   styleUrls: ['./account.css']
 })
