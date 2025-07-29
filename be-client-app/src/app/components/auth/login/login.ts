@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Auth } from '../../../services/auth';
 import { Notyf } from 'notyf';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,20 +12,28 @@ import { Notyf } from 'notyf';
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
-export class Login {
+export class Login implements OnInit {
 
   loginForm: FormGroup;
   isSubmitted = false;
   notyf = new Notyf();
+  returnUrl: string = '/';
+  loading = false;
 
-  constructor(private fb: FormBuilder, private authServices: Auth) {
+  constructor(private fb: FormBuilder, private authServices: Auth,
+    private location: Location, private route: ActivatedRoute) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
+  ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
+
   onSubmitLoginData() {
+    this.loading = true;
     this.isSubmitted = true;
     if (this.loginForm.invalid) return;
     const loginData = this.loginForm?.value;
@@ -33,11 +42,11 @@ export class Login {
       (res)=>{
         this.notyf.success("Login Successful !");
         setTimeout(()=>{
-          window.location.replace('');
+          window.location.replace(this.returnUrl);
         }, 2500);
       }, (err)=>{
-        console.error(err);
-        // this.notyf.error(err.error.message);
+        this.loading = false;
+        this.notyf.error(err.error);
       });
   }
 

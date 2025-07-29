@@ -7,14 +7,24 @@
 
   <!-- Shipping -->
   <div class="d-flex justify-content-between p-2 border" *ngIf="cartItems && cartItems.length > 0">
-    <span>SHIPPING</span>
-    <span class="text-muted">Add shipping address</span>
+    <span class="my-2">SHIPPING</span>
+    <span class="text-muted my-2" *ngIf="!defaultAddress">
+      <small>Finding Address</small>
+      <img src="https://cdn.pixabay.com/animation/2024/04/02/07/57/07-57-40-974_512.gif" height="20px" width="40px" style="image-rendering: optimizeSpeed;" alt="loading...">
+    </span>
+    <div class="text-muted my-2 address" *ngIf="defaultAddress" style="height: 2.5em; overflow: hidden;">
+        <span>{{ defaultAddress.houseInfo }}, {{ defaultAddress.flatInfo }}</span><br />
+        {{ defaultAddress.addressLine1 }},
+        <span *ngIf="defaultAddress.addressLine2">{{ defaultAddress.addressLine2 }}, <br /></span>
+        {{ defaultAddress.cityOrTown }}, {{ defaultAddress.pincode }},<br />
+        {{ defaultAddress.state }}, {{ defaultAddress.country }}
+    </div>
   </div>
 
   <!-- Delivery -->
   <div class="d-flex justify-content-between p-2 border" *ngIf="cartItems && cartItems.length > 0">
     <span>DELIVERY</span>
-    <span class="text-muted">Free<br><small>Standard | 4-5 days</small></span>
+    <span class="text-muted"><small>Standard | 4-5 days</small></span>
   </div>
 
   <!-- Payment -->
@@ -38,7 +48,8 @@
 
     <!-- Product List -->
     <div *ngFor="let item of cartItems" class="d-flex align-items-start justify-content-between my-2">
-      <img [src]="item.imgUrl" [routerLink]="['/product', item?.id]" class="rounded" style="width: 40px; height: 40px; object-fit: cover;" />
+      <img [src]="item.imgUrl" [routerLink]="['/product', item?.id]" class="rounded"
+        style="width: 40px; height: 40px; object-fit: cover;" />
       <div class="flex-fill mx-2">
         <div [routerLink]="['/product', item?.id]">{{ item.productName }}</div>
         <div class="d-flex align-items-center gap-2">
@@ -89,7 +100,8 @@
   </div>
 
   <!-- No Cart Items -->
-  <div class="d-flex flex-column align-items-center justify-content-center text-center border p-4" *ngIf="cartItems && cartItems.length < 1">
+  <div class="d-flex flex-column align-items-center justify-content-center text-center border p-4"
+    *ngIf="cartItems && cartItems.length < 1">
     <img src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png" alt="Empty Cart" width="140" class="mb-4">
 
     <h4 class="mb-2 text-secondary">Your cart is empty!</h4>
@@ -100,6 +112,6 @@
     </button>
   </div>
 
-  <br/>
-  <br/>
+  <br />
+  <br />
 </div>

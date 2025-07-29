@@ -15,7 +15,9 @@ export const AuthGuard: CanActivateFn = (route, state) => {
       return true;
     }
     // Redirect unauthenticated users to login
-    return router.createUrlTree(['login']);
+    return router.createUrlTree(['/login'], {
+      queryParams: { returnUrl: state.url }
+    });
   } else {
     // If logged in but tries to access login/signup, redirect to home or dashboard
     if (url.includes('login') || url.includes('signup')) {

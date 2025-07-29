@@ -2,27 +2,46 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart-service';
 import { RouterLink } from '@angular/router';
+import { AddressService } from '../../services/address-service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './cart.html',
   styleUrl: './cart.css'
 })
 export class Cart implements OnInit {
 
   cartItems: any[] = [];
+  addressList: any[] = [];
+  defaultAddress: any;
   totalItem: any = 0;
   totalAmount: any = 0;
   shippingCharges: any = 0;
   tax: any = 0;
   totalPrice: any = 0;
 
-  constructor(private cartService: CartService, private location: Location) {}
+  constructor(private cartService: CartService, private location: Location,
+              private addressService: AddressService) {}
 
   ngOnInit(): void {
     this.getCartItemList();
+    setTimeout(()=>{
+      if (this.totalItem > 0) {
+        this.getAddressList();
+      }
+    }, 1500);
+  }
+
+  getAddressList() {
+    this.addressService.getAddressListById().subscribe((res:any)=>{
+      this.addressList = res.data;
+      this.defaultAddress = this.addressList.find(addr => addr.isDefault);
+    }, (err)=>{
+      console.log(err.message);
+    })
   }
 
   getCartItemList() {
