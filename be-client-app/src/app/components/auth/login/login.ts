@@ -35,7 +35,10 @@ export class Login implements OnInit {
   onSubmitLoginData() {
     this.loading = true;
     this.isSubmitted = true;
-    if (this.loginForm.invalid) return;
+    if (this.loginForm.invalid) {
+        this.loading = false;
+        return;
+    }
     const loginData = this.loginForm?.value;
     this.authServices.loginSession(loginData)
     .subscribe(
