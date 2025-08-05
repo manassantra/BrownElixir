@@ -72,5 +72,69 @@ async function calculateAmountAndTaxes(items, totalAmount) {
     return newOrder;
 }
 
+// Read: Get a single order by ID
+const getOrder = async (req, res) => {
+  try {
+    const order = await Order.findOne({ orderId: req.params.orderId });
+    if (!order) {
+      return res.status(404).send({ status: 'Error', message: 'Order not found' });
+    }
+    res.status(200).send({ status: 'Success', data: order });
+  } catch (err) {
+    res.status(500).send({ status: 'Error', message: err.message });
+  }
+};
 
-module.exports = { generateOrder };
+// Read: Get all orders (optionally filter by customerId)
+const getAllOrders = async (req, res) => {
+  try {
+    const filter = {};
+    if (req.query.customerId) {
+      filter.customerId = req.query.customerId;
+    }
+    const orders = await Order.find(filter);
+    res.status(200).send({ status: 'Success', data: orders });
+  } catch (err) {
+    res.status(500).send({ status: 'Error', message: err.message });
+  }
+};
+
+// Update: Update an order by orderId
+const updateOrder = async (req, res) => {
+  try {
+    const updates = req.body;
+    const order = await Order.findOneAndUpdate(
+      { orderId: req.params.orderId },
+      updates,
+      { new: true }
+    );
+    if (!order) {
+      return res.status(404).send({ status: 'Error', message: 'Order not found' });
+    }
+    res.status(200).send({ status: 'Success', message: 'Order updated', data: order });
+  } catch (err) {
+    res.status(500).send({ status: 'Error', message: err.message });
+  }
+};
+
+// Delete: Delete an order by orderId
+const deleteOrder = async (req, res) => {
+  try {
+    const order = await Order.findOneAndDelete({ orderId: req.params.orderId });
+    if (!order) {
+      return res.status(404).send({ status: 'Error', message: 'Order not found' });
+    }
+    res.status(200).send({ status: 'Success', message: 'Order deleted' });
+  } catch (err) {
+    res.status(500).send({ status: 'Error', message: err.message });
+  }
+};
+
+
+module.exports = { 
+  generateOrder,
+  getOrder,
+  getAllOrders,
+  updateOrder,
+  deleteOrder
+};
