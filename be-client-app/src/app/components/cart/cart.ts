@@ -22,6 +22,10 @@ export class Cart implements OnInit {
   shippingCharges: any = 0;
   tax: any = 0;
   totalPrice: any = 0;
+  paymentMethod: string = 'COD'; // Default payment method
+  promoCode: string = '';
+  isDisabled: boolean = false;
+  discount: number = 0;
 
   constructor(private cartService: CartService, private location: Location,
               private addressService: AddressService) {}
@@ -55,11 +59,34 @@ export class Cart implements OnInit {
       this.tax = 6;
       this.shippingCharges = 30;
     }
-    this.totalPrice = this.totalAmount + this.shippingCharges + (this.totalAmount * this.tax / 100);
+    this.totalPrice = this.totalAmount - this.discount + this.shippingCharges + (this.totalAmount * this.tax / 100);
   }
 
   removeItem(id:any) {
     this.cartService.removeItem(id);
+    this.getCartItemList();
+  }
+
+  changePaymentMethod() {
+    console.log('Payment method changed to:', this.paymentMethod);
+  }
+
+  applyPromoCode() {
+    if (this.promoCode === 'DISCOUNT10') {
+      // Logic to apply promo code
+      this.isDisabled = true;
+      this.discount = 10;
+    } else {
+      alert('Invalid promo code');
+      this.isDisabled = false;
+    }
+    this.getCartItemList();
+  }
+
+  removePromoCode() {
+    this.promoCode = '';
+    this.isDisabled = false;
+    this.discount = 0;
     this.getCartItemList();
   }
 
@@ -75,5 +102,9 @@ export class Cart implements OnInit {
   decreaseQty(item:any) {
     this.cartService.decreaseQuantity(item.id);
     this.getCartItemList();
+  }
+
+  ngOnDestroy(): void {
+    this.removePromoCode();
   }
 }

@@ -9,11 +9,11 @@ require('dotenv').config({path: '.env'});
 // PORT & HOST config
 const port = process.env.PORT;
 const host = process.env.HOST;
-const origin = process.env.ORIGIN;
-const methods = process.env.METHODS
+const origin = process.env.ORIGIN?process.env.ORIGIN : '*';
+const methods = process.env.METHODS?process.env.METHODS
                 .replace(/[\[\]']+/g, '')
                 .split(',')
-                .map(method => method.trim());
+                .map(method => method.trim()) : '*';
 
 // public static server
 server.use('/public', express.static('public'));

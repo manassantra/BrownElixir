@@ -58,7 +58,7 @@ export class ProductList implements OnInit {
       this.totalProducts = response.total;
       this.loading = false;
     }, error => {
-      console.error('Error:', error);
+      console.error('Error:', error.message);
       this.loading = false;
     });
   }

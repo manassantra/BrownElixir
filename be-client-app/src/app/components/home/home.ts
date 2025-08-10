@@ -26,7 +26,7 @@ export class Home implements OnInit {
     this.categoryService.getAllCategories().subscribe((data)=>{
       this.productCategories = data;
     }, (err)=>{
-      console.log(err.error);
+      console.log(err.message);
     })
   }
 
