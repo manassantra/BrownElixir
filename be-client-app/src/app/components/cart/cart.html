@@ -7,36 +7,52 @@
 
   <!-- Shipping -->
   <div class="d-flex justify-content-between p-2 border" *ngIf="cartItems && cartItems.length > 0">
-    <span class="my-2">SHIPPING</span>
+    <small class="my-2">SHIPPING</small>
     <span class="text-muted my-2" *ngIf="!defaultAddress">
       <small>Finding Address</small>
       <img src="https://cdn.pixabay.com/animation/2024/04/02/07/57/07-57-40-974_512.gif" height="20px" width="40px" style="image-rendering: optimizeSpeed;" alt="loading...">
     </span>
-    <div class="text-muted my-2 address" *ngIf="defaultAddress" style="height: 2.5em; overflow: hidden;">
+    <div class="text-muted my-2 address" *ngIf="defaultAddress" style="height: 2em; overflow: hidden; text-overflow: ellipsis;">
         <span>{{ defaultAddress.houseInfo }}, {{ defaultAddress.flatInfo }}</span><br />
         {{ defaultAddress.addressLine1 }},
         <span *ngIf="defaultAddress.addressLine2">{{ defaultAddress.addressLine2 }}, <br /></span>
         {{ defaultAddress.cityOrTown }}, {{ defaultAddress.pincode }},<br />
         {{ defaultAddress.state }}, {{ defaultAddress.country }}
     </div>
+    <div class="col-auto my-2">
+      <button class="btn btn-sm btn-warning" routerLink="/address-list">
+        <i class="bi bi-pencil-square"></i>
+      </button>
+    </div>
   </div>
 
   <!-- Delivery -->
   <div class="d-flex justify-content-between p-2 border" *ngIf="cartItems && cartItems.length > 0">
-    <span>DELIVERY</span>
+    <small>DELIVERY</small>
     <span class="text-muted"><small>Standard | 4-5 days</small></span>
   </div>
 
   <!-- Payment -->
   <div class="d-flex justify-content-between p-2 border" *ngIf="cartItems && cartItems.length > 0">
-    <span>PAYMENT</span>
-    <span class="text-muted">-- Select Payment Mode --</span>
+    <small>PAYMENT</small>
+    <div class="col-auto" (change)="changePaymentMethod()">
+      <input type="radio" id="paymentMethod" name="paymentMethod" value="COD" [(ngModel)]="paymentMethod" class="form-check-input" />
+      <label class="form-check-label text-muted" for="paymentMethodCOD">&nbsp;COD</label>
+    </div>
+    <div class="col-auto" (change)="changePaymentMethod()">
+      <input type="radio" id="paymentMethod" name="paymentMethod" value="Online" [(ngModel)]="paymentMethod" class="form-check-input ms-3" />
+      <label class="form-check-label text-muted" for="paymentMethodOnline">&nbsp;UPI/CARD</label>
+    </div>
   </div>
 
   <!-- Promo -->
   <div class="d-flex justify-content-between p-2 border" *ngIf="cartItems && cartItems.length > 0">
-    <span>PROMO</span>
-    <span class="text-muted">Apply promo code</span>
+    <small class="my-2">PROMO</small>
+    <div class="input-group input-group-sm ms-2">
+      <input class="form-control" type="text" placeholder="Enter promo code" [(ngModel)]="promoCode" [disabled]="isDisabled" />
+      <button class="btn-sm btn-success" *ngIf="!isDisabled"><i class="bi bi-arrow-right-circle" (click)="applyPromoCode()"></i></button>
+      <button class="btn-sm btn-danger" *ngIf="isDisabled"><i class="bi bi-trash3" (click)="removePromoCode()"></i></button>
+    </div>
   </div>
 
   <!-- Items -->
@@ -72,6 +88,10 @@
     <div class="d-flex justify-content-between">
       <span>Subtotal</span>
       <span>{{ totalAmount | currency: 'INR'}}</span>
+    </div>
+    <div class="d-flex justify-content-between" *ngIf="isDisabled">
+      <span>Coupon Discount</span>
+      <span class="text-success">- {{ discount | currency: 'INR'}}</span>
     </div>
     <div class="d-flex justify-content-between">
       <span>Shipping Charges</span>
@@ -115,3 +135,4 @@
   <br />
   <br />
 </div>
+
