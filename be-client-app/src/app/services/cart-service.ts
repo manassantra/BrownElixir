@@ -1,7 +1,7 @@
 import { DOCUMENT, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment.develop';
 import { CartItem } from '../models/cart';
 
 @Injectable({

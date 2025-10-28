@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DOCUMENT, Inject, Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { map, ReplaySubject } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment.develop';
 import { User } from '../models/user';
 
 @Injectable({

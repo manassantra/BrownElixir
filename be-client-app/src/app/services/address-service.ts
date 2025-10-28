@@ -1,5 +1,5 @@
 import { DOCUMENT, Inject, Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment.develop';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -36,5 +36,9 @@ export class AddressService {
 
   getAddressListById() {
     return this.http.get(this.apiurl + 'list/' + this.customerId, { headers: this.headers});
+  }
+
+  updateAddressById(id:any, data: any) {
+    return this.http.put(this.apiurl + 'update/' + id, data, { headers: this.headers});
   }
 }
