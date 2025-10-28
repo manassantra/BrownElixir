@@ -37,4 +37,8 @@ export class AddressService {
   getAddressListById() {
     return this.http.get(this.apiurl + 'list/' + this.customerId, { headers: this.headers});
   }
+
+  updateAddressById(id:any, data: any) {
+    return this.http.put(this.apiurl + 'update/' + id, data, { headers: this.headers});
+  }
 }

@@ -2,45 +2,136 @@
   <!-- Header -->
   <div class="d-flex border-bottom justify-content-between pb-2 mb-3">
     <span class="me-2" style="cursor: pointer;" (click)="goBack()">&#8592;</span>
-    <h6 class="mb-0 fw-semibold mx-auto">Address List <span *ngIf="isAddressData">({{addressList.length}})</span></h6>
+    <h6 class="mb-0 fw-semibold mx-auto">
+      Address List
+      <span *ngIf="isAddressData">({{ addressList.length }})</span>
+    </h6>
   </div>
 
-  <div class="row col-12" *ngIf="isAddressData">
-    <!-- Address Card -->
+  <!-- Address List -->
+  <div class="row col-12" *ngIf="isAddressData; else noAddress">
     <div class="col-sm-12 m-2" *ngFor="let address of addressList">
       <div class="card p-2">
-        <small class="d-block mb-2 fw-semibold text-muted" *ngIf="address.isDefault">Default Address</small>
+        <small class="d-block mb-2 fw-semibold text-muted" *ngIf="address.isDefault">
+          Default Address
+        </small>
+
         <div class="card-body">
-          <span>{{address.houseInfo}}
-            <b *ngIf="address.flatInfo && address.flatInfo">&nbsp; - &nbsp;</b>
-                {{address.flatInfo}},
+          <span>
+            {{ address.houseInfo }}
+            <b *ngIf="address.flatInfo">&nbsp; - &nbsp;</b>{{ address.flatInfo }},
           </span>
-          {{address.addressLine1}}
-          <span *ngIf="address.addressLine1 && address.addressLine2">, {{address.addressLine2}}, </span>
-          {{address.cityOrTown}}, {{address.pincode}}, {{address.state}}, {{address.country}}
+          {{ address.addressLine1 }}
+          <span *ngIf="address.addressLine2">, {{ address.addressLine2 }}, </span>
+          {{ address.cityOrTown }}, {{ address.pincode }}, {{ address.state }}, {{ address.country }}
         </div>
-        <div class="d-flex pt-3 border-top mt-3" [ngClass]="{'justify-content-between': !address.isDefault, 'justify-content-around': address.isDefault}">
-          <button class="btn btn-sm btn-outline-dark" [routerLink]="['']" routerLinkActive="router-link-active" >Edit</button>
-          <button class="btn btn-sm btn-danger">Remove</button>
-          <button class="btn btn-sm btn-outline-warning" *ngIf="!address.isDefault"> Set Default</button>
+
+        <div class="d-flex pt-3 border-top mt-3" [ngClass]="{
+            'justify-content-between': !address.isDefault,
+            'justify-content-around': address.isDefault
+          }">
+          <button class="btn btn-sm btn-outline-dark" (click)="openEditModal(address)">
+            Edit
+          </button>
+
+          <button class="btn btn-sm btn-danger" (click)="removeAddress(address)">
+            Remove
+          </button>
+
+          <button class="btn btn-sm btn-outline-warning" *ngIf="!address.isDefault" (click)="setDefault(address)">
+            Set Default
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="d-flex justify-content-center mb-10" *ngIf="!isAddressData">
-    <div class="col-sm-12 m-2">
-      <div class="card p-2">
-        <div class="card-body">
-          <strong class="text-muted">No Data Available !</strong>
+  <!-- Empty State -->
+  <ng-template #noAddress>
+    <div class="d-flex justify-content-center mb-10">
+      <div class="col-sm-12 m-2">
+        <div class="card p-2">
+          <div class="card-body text-center">
+            <strong class="text-muted">No Data Available!</strong>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-template>
 
-  <!-- Add New Address Button -->
-  <button class="btn w-100 mt-4" [ngClass]="{ 'mb-5': isAddressData }"  style="background-color: #ffbb00; font-weight: 500;">
+  <!-- Add New Address -->
+  <button class="btn w-100 mt-4" [ngClass]="{ 'mb-5': isAddressData }"
+    style="background-color: #ffbb00; font-weight: 500;" (click)="addNewAddress()">
     Add New Address
   </button>
   <br /><br />
+</div>
+
+<!-- Edit Address Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Address</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <form *ngIf="selectedAddress">
+          <div class="mb-2">
+            <label class="form-label">House Info</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedAddress.houseInfo" name="houseInfo" />
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label">Flat Info</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedAddress.flatInfo" name="flatInfo" />
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label">Address Line</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedAddress.addressLine1" name="addressLine1" />
+          </div>
+
+          <div class="mb-2" *ngIf="selectedAddress.addressLine2">
+            <label class="form-label">Address Line (optional)</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedAddress.addressLine2" name="addressLine2" />
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label">City / Town</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedAddress.cityOrTown" name="cityOrTown" />
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label">Pincode</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedAddress.pincode" name="pincode" />
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label">State</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedAddress.state" name="state" />
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label">Country</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedAddress.country" name="country" />
+          </div>
+
+          <div class="mb-2">
+            <input type="checkbox" [(ngModel)]="selectedAddress.isDefault" name="isDefault" /> Mark as Default
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges()">
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

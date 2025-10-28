@@ -69,7 +69,7 @@ export class ProductList implements OnInit {
 
   @HostListener('window:scroll', [])
   onScroll(): void {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100 && !this.loading) {
+    if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 100 && !this.loading) {
       if (this.products.length < this.totalProducts) {
         this.page++;
         this.loadProducts();
@@ -88,7 +88,7 @@ export class ProductList implements OnInit {
     this.flavor = value;
     this.applyFilters();
     this.router.navigate(
-      ['/product-list', this.flavor?this.flavor : this.flavor? '': 'All'], // new route param
+      ['/product-list', this.flavor ? this.flavor : this.flavor ? '' : 'All'], // new route param
       { relativeTo: this.route } // optional; can remove if absolute path
     );
   }
