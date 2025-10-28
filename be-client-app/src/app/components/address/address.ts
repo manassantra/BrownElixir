@@ -50,6 +50,9 @@ export class Address implements OnInit {
       console.log(err.error);
     })
     this.editModal.hide();
+    setTimeout(()=>{
+      this.getAddressess();
+    }, 2500);
   }
 
   addNewAddress() {
