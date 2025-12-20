@@ -46,7 +46,3 @@ jobs:
     - name: Run tests
       working-directory: be-api-server
       run: npm test
-
-    - name: Start server
-      working-directory: be-api-server
-      run: npm start
