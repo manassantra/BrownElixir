@@ -20,7 +20,9 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.0",
     "multer": "^2.0.1",
-    "razorpay": "^2.9.6"
+    "razorpay": "^2.9.6",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "jest": "^30.0.2",
