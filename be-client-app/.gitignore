@@ -6,7 +6,7 @@
 /out-tsc
 /bazel-out
 # Ignore Angular environment files
-src/environments/environment.development.ts
+src/environments/*
 
 
 # Node

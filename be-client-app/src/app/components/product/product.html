@@ -6,7 +6,7 @@
 </div>
 
 <!-- Product Details Grid -->
-<div class="container my-2" style="max-width: 450px;">
+<div class="container my-2" style="max-width: 450px;" *ngIf="!loading">
   <!-- Header -->
   <div class="d-flex justify-content-between border-bottom pb-2 mb-3">
     <span class="me-2" style="cursor: pointer;" (click)="goBack()">&#8592;</span>
