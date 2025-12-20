@@ -28,7 +28,7 @@ const createAddress = async(req, res) => {
       houseInfo,
       flatInfo,
       addressLine1,
-      addressLine1,
+      addressLine2,
       cityOrTown,
       state,
       country,

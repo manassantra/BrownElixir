@@ -3,7 +3,9 @@ const express = require('express'),
       cors = require('cors'),
       mongoose = require('mongoose'),
       bodyParser = require('body-parser'),
-      baseApi = require('./routes/baseApi');
+      baseApi = require('./routes/baseApi'),
+      swaggerUi = require('swagger-ui-express'),
+      swaggerSpec = require('./swagger');
 require('dotenv').config({path: '.env'});
 
 // PORT & HOST config
@@ -58,6 +60,7 @@ server.use("/test", (req, res)=>{
     res.send({code: err.statusCode, message: err.message, error: err.error});
   }
 });
+server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 server.use("/api", baseApi);
 
 // create server
