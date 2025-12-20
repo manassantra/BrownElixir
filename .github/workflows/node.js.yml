@@ -13,6 +13,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      API_KEY: "9f2e7d5428d6a9fc8d2c7183b2c0e007"
+      API_SECRET: "0f7a89e264cf0dc5a4a3964cbd9d39f231b7f3c6b67c58e8f6a7856b369a5c72"
+      DB_URL: "mongodb+srv://adm-brownelixir:ZP0UfhHXDmaHJKQa@cluster-be-dev.ujbjt0g.mongodb.net/brownelixir-dev"
+      HOST: "http://localhost"
+      JWT_ADMIN_SECRET: "9c1d5e86a4b7f8f5e3d22380f9e69a19c2a7ed8f2b8a754e6d1423c9adf8b740"
+      JWT_CUSTOMER_SECRET: "e4f9d7c8b6a89f4e68d3a2d0b4c73e35a94f71a3f7bc5a6fc7a9e2c9df5b6eaf"
+      METHODS: "['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']"
+      ORIGIN: "http://localhost:4200"
+      PORT: 3000
+      RAZORPAY_KEY_ID: "rzp_test_jJ7mV2rxu7IenH"
+      RAZORPAY_KEY_SECRET: "UzkMSVC0G8g9PGus9U9Rlp1l"
+
     strategy:
       matrix:
         node-version: [24.x]
@@ -28,3 +41,4 @@ jobs:
     - run: cd be-api-server
     - run: npm install
     - run: npm test
+    - run: npm start
