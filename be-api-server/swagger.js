@@ -12,9 +12,15 @@ const options = {
 
     servers: [
       {
+        name: "LOCAL",
         url: "http://localhost:3000",
-        description: "Local",
+        description: "Local Server [QA]",
       },
+      {
+        name: "DEV",
+        url: "https://chocobitez-api-server.onrender.com",
+        description: "Dev Server [QA]"
+      }
     ],
 
     components: {
