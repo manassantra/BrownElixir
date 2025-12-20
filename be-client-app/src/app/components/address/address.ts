@@ -17,6 +17,7 @@ export class Address implements OnInit {
   addressList: any[] = [];
   selectedAddress: any = null;
   editModal: any;
+  loading = false;
 
   constructor(private addressService: AddressService, private location: Location) {}
 
@@ -25,11 +26,13 @@ export class Address implements OnInit {
   }
 
   getAddressess() {
+    this.loading = true;
     this.addressService.getAddressListById().subscribe((res: any)=>{
       this.addressList = res.data;
       if (this.addressList && this.addressList.length) {
         this.isAddressData = true;
       }
+      this.loading = false;
     }, (err)=>{
       console.log(err.message);
     })
@@ -43,6 +46,7 @@ export class Address implements OnInit {
   }
 
   saveChanges() {
+    this.loading = true;
     let id = this.selectedAddress.id;
     this.addressService.updateAddressById(id, this.selectedAddress).subscribe((res:any)=>{
       console.log(res);
@@ -52,6 +56,7 @@ export class Address implements OnInit {
     this.editModal.hide();
     setTimeout(()=>{
       this.getAddressess();
+      this.loading = false;
     }, 2500);
   }
 

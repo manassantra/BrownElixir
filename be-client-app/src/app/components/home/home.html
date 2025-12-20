@@ -22,25 +22,11 @@
     </div>
 
     <div class="row">
-        <div class="col-6 col-md-4 col-lg-3 mb-3">
-            <div class="product-card">
-                <img src="https://cdn11.bigcommerce.com/s-mg465bi/images/stencil/original/uploaded_images/chocolatewinepairing.jpg?t=1517943176"
-                    class="product-img mb-2" alt="Product">
-                <div>Product Name</div>
-                <div class="text-muted small">Rs. 450.00</div>
-                <div class="product-actions">
-                    <i class="bi bi-heart fs-2"></i>
-                    <i class="bi bi-cart fs-2"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-6 col-md-4 col-lg-3 mb-3">
-            <div class="product-card">
-                <img src="https://cdn11.bigcommerce.com/s-mg465bi/images/stencil/original/uploaded_images/chocolatewinepairing.jpg?t=1517943176"
-                    class="product-img mb-2" alt="Product">
-                <div>Product Name</div>
-                <div class="text-muted small">Rs. 450.00</div>
+        <div class="col-6 col-md-4 col-lg-3 mb-2" *ngFor="let product of products">
+            <div class="product-card" [routerLink]="['/product', product?.id]">
+                <img [src]="product.imgUrl" alt="Product" class="product-img"  [routerLink]="['/product', product?.id]">
+                <div>{{ product?.productName }}</div>
+                <div class="text-muted small">Rs. {{ product?.unitPrice | number:'1.2-2' }}</div>
                 <div class="product-actions">
                     <i class="bi bi-heart fs-2"></i>
                     <i class="bi bi-cart fs-2"></i>
