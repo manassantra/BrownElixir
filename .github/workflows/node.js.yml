@@ -1,6 +1,3 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI
 
 on:
@@ -13,32 +10,43 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # ✅ Environment variables from GitHub Secrets
     env:
-      API_KEY: "9f2e7d5428d6a9fc8d2c7183b2c0e007"
-      API_SECRET: "0f7a89e264cf0dc5a4a3964cbd9d39f231b7f3c6b67c58e8f6a7856b369a5c72"
-      DB_URL: "mongodb+srv://adm-brownelixir:ZP0UfhHXDmaHJKQa@cluster-be-dev.ujbjt0g.mongodb.net/brownelixir-dev"
-      HOST: "http://localhost"
-      JWT_ADMIN_SECRET: "9c1d5e86a4b7f8f5e3d22380f9e69a19c2a7ed8f2b8a754e6d1423c9adf8b740"
-      JWT_CUSTOMER_SECRET: "e4f9d7c8b6a89f4e68d3a2d0b4c73e35a94f71a3f7bc5a6fc7a9e2c9df5b6eaf"
-      METHODS: "['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']"
-      ORIGIN: "http://localhost:4200"
+      API_KEY: ${{ secrets.API_KEY }}
+      API_SECRET: ${{ secrets.API_SECRET }}
+      DB_URL: ${{ secrets.DB_URL }}
+      HOST: http://localhost
       PORT: 3000
-      RAZORPAY_KEY_ID: "rzp_test_jJ7mV2rxu7IenH"
-      RAZORPAY_KEY_SECRET: "UzkMSVC0G8g9PGus9U9Rlp1l"
+      ORIGIN: http://localhost:4200
+      METHODS: "['GET','POST','PUT','DELETE','OPTIONS']"
+      JWT_ADMIN_SECRET: ${{ secrets.JWT_ADMIN_SECRET }}
+      JWT_CUSTOMER_SECRET: ${{ secrets.JWT_CUSTOMER_SECRET }}
+      RAZORPAY_KEY_ID: ${{ secrets.RAZORPAY_KEY_ID }}
+      RAZORPAY_KEY_SECRET: ${{ secrets.RAZORPAY_KEY_SECRET }}
 
     strategy:
       matrix:
         node-version: [24.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: cd be-api-server
-    - run: npm install
-    - run: npm test
-    - run: npm start
+        cache: npm
+        cache-dependency-path: be-api-server/package-lock.json
+
+    - name: Install dependencies
+      working-directory: be-api-server
+      run: npm install
+
+    - name: Run tests
+      working-directory: be-api-server
+      run: npm test
+
+    - name: Start server
+      working-directory: be-api-server
+      run: npm start
