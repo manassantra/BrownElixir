@@ -1,4 +1,11 @@
-<div class="container-fluid my-2" style="max-width: 450px;">
+<div class="text-center mt-20" style="margin-top: 100px;" *ngIf="loading">
+    <div class="spinner-border text-secondary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+
+<div class="container-fluid my-2" style="max-width: 450px;" *ngIf="!loading">
   <!-- Header -->
   <div class="d-flex border-bottom justify-content-between pb-2 mb-3">
     <span class="me-2" style="cursor: pointer;" (click)="goBack()">&#8592;</span>

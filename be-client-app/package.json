@@ -6,8 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng serve --watch --configuration development",
-    "test": "ng test",
-    "serve": "node dist/be-client-app/server/server.mjs"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -19,8 +18,6 @@
     "@angular/platform-browser": "^20.0.0",
     "@angular/platform-server": "^20.0.0",
     "@angular/router": "^20.0.0",
-    "@angular/ssr": "^20.0.3",
-    "express": "^5.1.0",
     "jwt-decode": "^4.0.0",
     "notyf": "^3.10.0",
     "rxjs": "~7.8.0",

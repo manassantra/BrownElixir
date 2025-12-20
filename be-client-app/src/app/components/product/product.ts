@@ -17,32 +17,35 @@ export class Product implements OnInit {
   product: any;
   selectedQty: number = 0;
   quantityOptions: number[] = [];
+  loading = false;
 
   constructor(private location: Location, private route: ActivatedRoute,
     private productService: ProductService, private cartService: CartService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.id = this.route.snapshot.paramMap.get('id') || '';
-    this.getProductDetails();
+    await this.getProductDetails();
     this.cartService.updateCart();
   }
 
-  getProductDetails() {
-    this.productService.getProductDetails(this.id).subscribe((data)=>{
+  async getProductDetails() {
+    this.loading = true;
+    this.productService.getProductDetails(this.id).subscribe(async (data)=>{
       this.product = data.data;
       if (this.product.stock > 5) {
         this.product.stock = '5+';
       } else if (this.product.stock === 0) {
         this.product.stock = 'Out of Stock'
       }
-      this.generateQtyOptions();
+      await this.generateQtyOptions();
+      this.loading = false;
     }, (err)=> {
       console.log(err.error);
     })
   }
 
-  generateQtyOptions() {
+  async generateQtyOptions() {
     const min = this.product.minQty || 1;
     const max = this.product.stock < 5 ? this.product.stock : this.product.maxQty;
 
