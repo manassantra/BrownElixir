@@ -16,7 +16,7 @@ export class ProductList implements OnInit {
   products: any[] = [];
   totalProducts = 0;
   page = 1;
-  limit = 6;  // Start with 6 products
+  limit = 6;
   loading = false;
 
   // Filters & Sorting
@@ -27,19 +27,26 @@ export class ProductList implements OnInit {
   search = '';
   sortOrder = 'asc';
 
-  constructor(private productService: ProductService, private route: ActivatedRoute,
-    private router: Router, private cartService: CartService) { }
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private cartService: CartService
+  ) { }
 
   ngOnInit() {
-    this.flavor = this.route.snapshot.paramMap.get('data')!;
-    if (this.flavor === 'All') {
-      this.flavor = "";
-    }
-    this.loadProducts();
+    // Subscribe to route params to handle dynamic changes
+    this.route.paramMap.subscribe(params => {
+      const data = params.get('data') || 'All';
+      this.flavor = (data === 'All') ? '' : data;
+      this.page = 1;
+      this.products = [];
+      this.loadProducts();
+    });
   }
 
   loadProducts() {
-    if (this.loading) return;  // Prevent multiple triggers
+    if (this.loading) return;
     this.loading = true;
 
     const filters = {
@@ -53,13 +60,16 @@ export class ProductList implements OnInit {
       limit: this.limit
     };
 
-    this.productService.getAllProducts(filters).subscribe(response => {
-      this.products = [...this.products, ...response.data];
-      this.totalProducts = response.total;
-      this.loading = false;
-    }, error => {
-      console.error('Error:', error.message);
-      this.loading = false;
+    this.productService.getAllProducts(filters).subscribe({
+      next: (response) => {
+        this.products = [...this.products, ...response.data];
+        this.totalProducts = response.total;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error:', err.message || err);
+        this.loading = false;
+      }
     });
   }
 
@@ -77,7 +87,6 @@ export class ProductList implements OnInit {
     }
   }
 
-  // For filters/search reset
   applyFilters() {
     this.page = 1;
     this.products = [];
@@ -87,9 +96,8 @@ export class ProductList implements OnInit {
   selectFlavor(value: string) {
     this.flavor = value;
     this.applyFilters();
-    this.router.navigate(
-      ['/product-list', this.flavor ? this.flavor : this.flavor ? '' : 'All'], // new route param
-      { relativeTo: this.route } // optional; can remove if absolute path
-    );
+
+    // Navigate with absolute path
+    this.router.navigate(['/product-list', value || 'All']);
   }
 }
