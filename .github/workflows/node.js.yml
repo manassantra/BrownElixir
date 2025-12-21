@@ -1,0 +1,48 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # ✅ Environment variables from GitHub Secrets
+    env:
+      API_KEY: ${{ secrets.API_KEY }}
+      API_SECRET: ${{ secrets.API_SECRET }}
+      DB_URL: ${{ secrets.DB_URL }}
+      HOST: http://localhost
+      PORT: 3000
+      ORIGIN: http://localhost:4200
+      METHODS: "['GET','POST','PUT','DELETE','OPTIONS']"
+      JWT_ADMIN_SECRET: ${{ secrets.JWT_ADMIN_SECRET }}
+      JWT_CUSTOMER_SECRET: ${{ secrets.JWT_CUSTOMER_SECRET }}
+      RAZORPAY_KEY_ID: ${{ secrets.RAZORPAY_KEY_ID }}
+      RAZORPAY_KEY_SECRET: ${{ secrets.RAZORPAY_KEY_SECRET }}
+
+    strategy:
+      matrix:
+        node-version: [24.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: npm
+        cache-dependency-path: be-api-server/package-lock.json
+
+    - name: Install dependencies
+      working-directory: be-api-server
+      run: npm install
+
+    - name: Run tests
+      working-directory: be-api-server
+      run: npm test
